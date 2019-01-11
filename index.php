@@ -74,8 +74,12 @@ foreach ($languages as $code => $native_name) {
 
 print "</table>\n";
 
+print "<h2>Contributors</h2>\n";
 $pwd = getcwd();
 foreach ($dirs as $dirId => $dir) {
+  print "<h3>{$dirId}</h3>\n";
+  print "<ul>\n";
+
   $f = popen("cd " . escapeshellarg($dir) . "; " . escapeshellarg("{$pwd}/git-log-json") . " .", 'r');
   $output = '';
   while ($r = fgets($f)) {
@@ -84,6 +88,15 @@ foreach ($dirs as $dirId => $dir) {
   pclose($f);
 
   $history = json_decode($output, true);
-  print "<pre>";
-  print_r($history);
+
+  $done = array();
+  foreach ($history as $commit) {
+    $name = $commit['author']['name'];
+    if (!in_array($name, $done)) {
+      print "  <li>". htmlspecialchars($name). "</li>";
+      $done[] = $name;
+    }
+  }
+
+  print "</ul>\n";
 }
