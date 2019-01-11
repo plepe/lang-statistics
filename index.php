@@ -28,17 +28,26 @@ foreach ($dirs as $dirId => $dir) {
 print "    <th>Total ({$total})</th>\n";
 print "  </tr>";
 
-?>
-<!--
-Status:
-0-15   #FF0033
-16-50  #FF7700
-51-70  #FFCC00
-71-85  #77CC00
-86-100 #33CC00
--->
+$status_colors = array(
+  15 => '#FF0033',
+  50 => '#FF7700',
+  70 => '#FFCC00',
+  85 => '#77CC00',
+  100 =>'#33CC00',
+);
 
-<?php
+function get_status_color ($completeness) {
+  global $status_colors;
+
+  foreach ($status_colors as $value => $color) {
+    if ($completeness * 100 <= $value) {
+      return $color;
+    }
+  }
+
+  return $lastColor;
+}
+
 foreach ($languages as $code => $native_name) {
   $sum = 0;
   foreach ($dirs as $dirId => $dir) {
@@ -52,11 +61,13 @@ foreach ($languages as $code => $native_name) {
     print "    <td>" . $languages[$code] . "</td>\n";
     foreach ($dirs as $dirId => $dir) {
       $completeness = ($stat[$dirId][$code] ?? 0) / $stat[$dirId][''];
-      printf("    <td>%.1f%%</td>", $completeness * 100);
+      $color = get_status_color($completeness);
+      printf("    <td style='background-color: $color'>%.1f%%</td>", $completeness * 100);
     }
 
     $completeness = $sum / $total;
-    printf("    <td>%.1f%%</td>", $completeness * 100);
+    $color = get_status_color($completeness);
+    printf("    <td style='background-color: $color'>%.1f%%</td>", $completeness * 100);
     print "  </tr>\n";
   }
 }
