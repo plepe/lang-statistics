@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "git-log-parser": "^1.2.0",
+    "stream-to-array": "^2.3.0"
+  }
+}

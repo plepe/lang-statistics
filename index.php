@@ -73,3 +73,17 @@ foreach ($languages as $code => $native_name) {
 }
 
 print "</table>\n";
+
+$pwd = getcwd();
+foreach ($dirs as $dirId => $dir) {
+  $f = popen("cd " . escapeshellarg($dir) . "; " . escapeshellarg("{$pwd}/git-log-json") . " .", 'r');
+  $output = '';
+  while ($r = fgets($f)) {
+    $output .= $r;
+  }
+  pclose($f);
+
+  $history = json_decode($output, true);
+  print "<pre>";
+  print_r($history);
+}

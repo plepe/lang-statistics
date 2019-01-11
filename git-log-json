@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+var log      = require('git-log-parser');
+var toArray = require('stream-to-array');
+ 
+toArray(log.parse({
+  _: '.'
+}), function (err, arr) {
+  console.log(JSON.stringify(arr, null, '  '))
+})
