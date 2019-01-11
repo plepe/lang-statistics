@@ -1,1 +1,5 @@
 <?php
+$dirs = array(
+  "Module 1" => "path/to/module1/lang/",
+  "Module 2" => "path/to/module2/lang/",
+);

@@ -21,12 +21,6 @@ Status:
 $languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json", true));
 $languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json", true));
 
-$dirs = array(
-  "OpenStreetBrowser UI" => "lang/",
-  "Translations of OSM Tags" => "node_modules/openstreetmap-tag-translations/tags/",
-  "Category Titles" => $repositories['default']['path'] . 'lang/',
-);
-
 foreach ($dirs as $dirId => $dir) {
   $stat[$dirId] = build_statistic($dir);
 }
