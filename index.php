@@ -39,7 +39,8 @@ foreach ($dirs as $dirId => $dir) {
   $def[$dirId] = array(
     'name' => "{$dir['name']} ({$stat[$dirId]['']})",
     'sortable' => array('type' => 'num', 'dir' => 'desc'),
-    'format' => "{{ ({$dirId} / {$max} * 100)|number_format(1) }}%"
+    'format' => "{{ ({$dirId} / {$max} * 100)|number_format(1) }}%",
+    'class' => "cell-{{ ({$dirId} / {$max} * 5.99)|round(0, 'floor') }}",
   );
 
   foreach ($stat[$dirId] as $code => $value) {
@@ -60,7 +61,8 @@ foreach ($dirs as $dirId => $dir) {
 $def['total'] = array(
   'name' => "Total ({$total})",
   'sort' => array('type' => 'num', 'dir' => 'desc'),
-  'format' => "{{ (total / {$total} * 100)|number_format(1) }}%"
+  'format' => "{{ (total / {$total} * 100)|round(0, 'floor') }}%",
+    'class' => "cell-{{ (total / {$total} * 5.99)|round(0, 'floor') }}",
 );
 
 foreach ($data as $code => $dummy) {
@@ -72,14 +74,6 @@ foreach ($data as $code => $dummy) {
 
 $table = new table($def, $data, array('template_engine' => 'twig'));
 print $table->show();
-
-$status_colors = array(
-  15 => '#FF0033',
-  50 => '#FF7700',
-  70 => '#FFCC00',
-  85 => '#77CC00',
-  100 =>'#33CC00',
-);
 
 function get_status_color ($completeness) {
   global $status_colors;

@@ -5,3 +5,22 @@ th, td {
   border: 1px solid black;
   padding: 2px;
 }
+
+.cell-0 {
+  background: #ff0033;
+}
+.cell-1 {
+  background: #d63328;
+}
+.cell-2 {
+  background: #ad661e;
+}
+.cell-3 {
+  background: #849914;
+}
+.cell-4 {
+  background: #5bcc0a;
+}
+.cell-5 {
+  background: #33ff00;
+}
