@@ -29,10 +29,10 @@ $data = array();
 $sum = array();
 
 foreach ($dirs as $dirId => $dir) {
-  $stat[$dirId] = build_statistic($dir);
+  $stat[$dirId] = build_statistic($dir['path']);
 
   $def[$dirId] = array(
-    'name' => "{$dirId} ({$stat[$dirId]['']})",
+    'name' => "{$dir['name']} ({$stat[$dirId]['']})",
     'sortable' => array('type' => 'num'),
   );
 
@@ -89,10 +89,10 @@ function get_status_color ($completeness) {
 print "<h2>Contributors</h2>\n";
 $pwd = getcwd();
 foreach ($dirs as $dirId => $dir) {
-  print "<h3>{$dirId}</h3>\n";
+  print "<h3>{$dir['name']}</h3>\n";
   print "<ul>\n";
 
-  $f = popen("cd " . escapeshellarg($dir) . "; " . escapeshellarg("{$pwd}/git-log-json") . " .", 'r');
+  $f = popen("cd " . escapeshellarg($dir['path']) . "; " . escapeshellarg("{$pwd}/git-log-json") . " .", 'r');
   $output = '';
   while ($r = fgets($f)) {
     $output .= $r;
