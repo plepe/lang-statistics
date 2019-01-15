@@ -88,11 +88,10 @@ function get_status_color ($completeness) {
 }
 
 print "<h2>Contributors</h2>\n";
+print "<ul>\n";
 $pwd = getcwd();
+$done = array();
 foreach ($dirs as $dirId => $dir) {
-  print "<h3>{$dir['name']}</h3>\n";
-  print "<ul>\n";
-
   $f = popen("cd " . escapeshellarg($dir['path']) . "; " . escapeshellarg("{$pwd}/git-log-json") . " .", 'r');
   $output = '';
   while ($r = fgets($f)) {
@@ -102,7 +101,6 @@ foreach ($dirs as $dirId => $dir) {
 
   $history = json_decode($output, true);
 
-  $done = array();
   foreach ($history as $commit) {
     $name = $commit['author']['name'];
     if (!in_array($name, $done)) {
@@ -110,6 +108,5 @@ foreach ($dirs as $dirId => $dir) {
       $done[] = $name;
     }
   }
-
-  print "</ul>\n";
 }
+print "</ul>\n";
