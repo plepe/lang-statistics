@@ -31,11 +31,12 @@ $sum = array();
 
 foreach ($dirs as $dirId => $dir) {
   $stat[$dirId] = build_statistic($dir['path']);
+  $max = $stat[$dirId][''];
 
   $def[$dirId] = array(
     'name' => "{$dir['name']} ({$stat[$dirId]['']})",
     'sortable' => array('type' => 'num', 'dir' => 'desc'),
-    'format' => "{{ {$dirId}|default(0) }}"
+    'format' => "{{ ({$dirId} / {$max} * 100)|number_format(1) }}%"
   );
 
   foreach ($stat[$dirId] as $code => $value) {
@@ -56,6 +57,7 @@ foreach ($dirs as $dirId => $dir) {
 $def['total'] = array(
   'name' => "Total ({$total})",
   'sort' => array('type' => 'num', 'dir' => 'desc'),
+  'format' => "{{ (total / {$total} * 100)|number_format(1) }}%"
 );
 
 foreach ($data as $code => $dummy) {
