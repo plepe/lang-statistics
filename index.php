@@ -1,5 +1,6 @@
 <?php
 require "conf.php";
+require "modulekit/loader.php";
 require "lib/modulekit/lang/inc/build_statistic.php";
 ?>
 <!DOCTYPE html>
