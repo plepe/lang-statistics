@@ -10,3 +10,12 @@
 [submodule "lib/modulekit/base"]
 	path = lib/modulekit/base
 	url = https://github.com/plepe/modulekit-base.git
+[submodule "lib/modulekit/lib"]
+	path = lib/modulekit/lib
+	url = https://github.com/plepe/modulekit-lib.git
+[submodule "lib/twig.js"]
+	path = lib/twig.js
+	url = https://github.com/justjohn/twig.js
+[submodule "lib/Twig"]
+	path = lib/Twig
+	url = https://github.com/twigphp/Twig

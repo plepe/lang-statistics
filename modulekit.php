@@ -1,2 +1,2 @@
 <?php
-$depend = array('modulekit-table');
+$depend = array('modulekit-table', 'twig');

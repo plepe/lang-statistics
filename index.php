@@ -10,6 +10,7 @@ require "lib/modulekit/lang/inc/build_statistic.php";
 </head>
 <body>
 <?php
+call_hooks('init');
 $languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json"), true);
 $languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json"), true);
 
@@ -34,6 +35,7 @@ foreach ($dirs as $dirId => $dir) {
   $def[$dirId] = array(
     'name' => "{$dir['name']} ({$stat[$dirId]['']})",
     'sortable' => array('type' => 'num'),
+    'format' => "{{ {$dirId}|default(0) }}"
   );
 
   foreach ($stat[$dirId] as $code => $value) {
@@ -63,7 +65,7 @@ foreach ($data as $code => $dummy) {
   $data[$code]['total'] = $sum[$code];
 }
 
-$table = new table($def, $data);
+$table = new table($def, $data, array('template_engine' => 'twig'));
 print $table->show();
 
 $status_colors = array(
