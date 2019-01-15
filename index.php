@@ -12,22 +12,59 @@ require "lib/modulekit/lang/inc/build_statistic.php";
 <?php
 $languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json"), true);
 $languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json"), true);
-?>
-<table>
-  <tr>
-    <th>Code</th>
-    <th>Language</th>
-    <th>Native name</th>
-<?php
-$total = 0;
+
+$def = array(
+  'code' => array(
+    'name' => "Code",
+  ),
+  'lang' => array(
+    'name' => "Language",
+  ),
+  'native' => array(
+    'name' => "Native name",
+  ),
+);
+
+$data = array();
+$sum = array();
+
 foreach ($dirs as $dirId => $dir) {
   $stat[$dirId] = build_statistic($dir);
-  $total += $stat[$dirId][''];
 
-  print "    <th>{$dirId} ({$stat[$dirId]['']})</th>\n";
+  $def[$dirId] = array(
+    'name' => "{$dirId} ({$stat[$dirId]['']})",
+    'sortable' => array('type' => 'num'),
+  );
+
+  foreach ($stat[$dirId] as $code => $value) {
+    if ($code !== '') {
+      $data[$code][$dirId] = $value;
+
+      if (!array_key_exists($code, $sum)) {
+        $sum[$code] = 0;
+      }
+
+      $sum[$code] += $value;
+    }
+  }
+
+  $total += $stat[$dirId][''];
 }
-print "    <th>Total ({$total})</th>\n";
-print "  </tr>";
+
+$def['total'] = array(
+  'name' => "Total ({$total})",
+  'sort' => array('type' => 'num', 'dir' => 'desc'),
+);
+
+foreach ($data as $code => $dummy) {
+  $data[$code]['code'] = $code;
+  $data[$code]['lang'] = $languages_en["lang:{$code}"];
+  $data[$code]['native'] = $languages[$code];
+  $data[$code]['total'] = $sum[$code];
+}
+
+$table = new table($def, $data);
+print $table->show();
 
 $status_colors = array(
   15 => '#FF0033',
@@ -48,32 +85,6 @@ function get_status_color ($completeness) {
 
   return $lastColor;
 }
-
-foreach ($languages as $code => $native_name) {
-  $sum = 0;
-  foreach ($dirs as $dirId => $dir) {
-    $sum += $stat[$dirId][$code] ?? 0;
-  }
-
-  if ($sum > 0) {
-    print "  <tr>\n";
-    print "    <td>{$code}</td>\n";
-    print "    <td>" . $languages_en["lang:{$code}"] . "</td>\n";
-    print "    <td>" . $languages[$code] . "</td>\n";
-    foreach ($dirs as $dirId => $dir) {
-      $completeness = ($stat[$dirId][$code] ?? 0) / $stat[$dirId][''];
-      $color = get_status_color($completeness);
-      printf("    <td style='background-color: $color'>%.1f%%</td>", $completeness * 100);
-    }
-
-    $completeness = $sum / $total;
-    $color = get_status_color($completeness);
-    printf("    <td style='background-color: $color'>%.1f%%</td>", $completeness * 100);
-    print "  </tr>\n";
-  }
-}
-
-print "</table>\n";
 
 print "<h2>Contributors</h2>\n";
 $pwd = getcwd();
