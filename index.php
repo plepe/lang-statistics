@@ -34,7 +34,7 @@ foreach ($dirs as $dirId => $dir) {
 
   $def[$dirId] = array(
     'name' => "{$dir['name']} ({$stat[$dirId]['']})",
-    'sortable' => array('type' => 'num'),
+    'sortable' => array('type' => 'num', 'dir' => 'desc'),
     'format' => "{{ {$dirId}|default(0) }}"
   );
 
