@@ -107,6 +107,11 @@ foreach ($dirs as $dirId => $dir) {
 
   foreach ($history as $commit) {
     $name = $commit['author']['name'];
+
+    if (array_key_exists($name, $aliasNames)) {
+      $name = $aliasNames[$name];
+    }
+
     if (!in_array($name, $done)) {
       $done[] = $name;
     }

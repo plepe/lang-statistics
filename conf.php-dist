@@ -9,3 +9,7 @@ $dirs = array(
     'path' => "path/to/module2/lang/",
   ),
 );
+
+$aliasNames = array(
+  'alice' => 'Alice', // map contributions of 'alice' to 'Alice'
+);
