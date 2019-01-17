@@ -2,6 +2,8 @@
 require "conf.php";
 require "modulekit/loader.php";
 require "lib/modulekit/lang/inc/build_statistic.php";
+require "vendor/autoload.php";
+$Parsedown = new Parsedown();
 ?>
 <!DOCTYPE html>
 <html>
