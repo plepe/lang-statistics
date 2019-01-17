@@ -93,8 +93,6 @@ function get_status_color ($completeness) {
   return $lastColor;
 }
 
-print "<h2>Contributors</h2>\n";
-print "<ul>\n";
 $pwd = getcwd();
 $done = array();
 foreach ($dirs as $dirId => $dir) {
@@ -110,10 +108,16 @@ foreach ($dirs as $dirId => $dir) {
   foreach ($history as $commit) {
     $name = $commit['author']['name'];
     if (!in_array($name, $done)) {
-      print "  <li>". htmlspecialchars($name). "</li>";
       $done[] = $name;
     }
   }
+}
+natsort($done);
+
+print "<h2>Contributors</h2>\n";
+print "<ul>\n";
+foreach ($done as $name) {
+  print "  <li>". htmlspecialchars($name). "</li>";
 }
 print "</ul>\n";
 
