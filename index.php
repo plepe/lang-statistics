@@ -15,6 +15,10 @@ $Parsedown = new Parsedown();
 </head>
 <body>
 <?php
+if (file_exists('header.md')) {
+  print $Parsedown->text(file_get_contents('header.md'));
+}
+
 call_hooks('init');
 $languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json"), true);
 $languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json"), true);
@@ -112,3 +116,10 @@ foreach ($dirs as $dirId => $dir) {
   }
 }
 print "</ul>\n";
+
+if (file_exists('footer.md')) {
+  print $Parsedown->text(file_get_contents('footer.md'));
+}
+
+print "</body>\n";
+print "</html>\n";
