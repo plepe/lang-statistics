@@ -13,3 +13,7 @@ $dirs = array(
 $aliasNames = array(
   'alice' => 'Alice', // map contributions of 'alice' to 'Alice'
 );
+
+$hiddenNames = array(
+  'Weblate Admin',
+);
