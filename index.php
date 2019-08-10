@@ -117,7 +117,7 @@ foreach ($dirs as $dirId => $dir) {
     }
   }
 }
-natsort($done);
+natcasesort($done);
 
 print "<h2>Contributors</h2>\n";
 print "<ul>\n";
